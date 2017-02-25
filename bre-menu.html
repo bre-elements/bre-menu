@@ -1,0 +1,54 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-menu/paper-submenu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<!--
+`bre-menu`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="bre-menu">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-menu>
+      <template is='dom-repeat' items='[[items]]'>
+        <template is='dom-if' if='{{!isSubmenu(item)}}'>
+          <paper-item>[[item.title]]</paper-item>
+        </template>
+        <template is='dom-if' if='{{isSubmenu(item)}}'>
+          <paper-submenu>
+            <paper-item class='menu-trigger'>[[item.title]]</paper-item>
+            <paper-menu class="menu-content">
+              <template is='dom-repeat' items='[[item.items]]'>
+                <paper-item>[[item]]</paper-item>
+              </template>
+            </paper-menu>
+          </paper-submenu>
+        </template>
+      </template>
+    </paper-menu>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'bre-menu',
+
+      isSubmenu:function(item){
+        return !!(item.items);
+      },
+      properties: {
+        items:{
+          type:Array
+        }
+      },
+
+    });
+  </script>
+</dom-module>
